@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-col">
-        <h1 class="mt-24 font-semibold text-2xl">
+        <h1 class="mt-20 font-semibold text-2xl">
         Choose from our delicious pizzas
         </h1>
-        <div class="h-24"></div>
+        <div class="h-20"></div>
         <ul class="w-11/12 self-center">
             <PizzaListItem v-for="pizza in this.getPizzas" :pizza="pizza" :key="pizza.id" :index="pizza.id"/>
         </ul>

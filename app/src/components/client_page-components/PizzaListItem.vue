@@ -24,12 +24,12 @@
                         :aria-controls="'collapse'+index">
                         <img :src="pizza.image" class="w-40 h-40 border-1 rounded-l-2xl border-sky-800"/>
                         <div class="flex-grow flex flex-col">
-                            <h1 class="text-sky-800 font-bold text-xl pt-5 self-center">{{pizza.name}}</h1>
+                            <h1 class="text-sky-800 font-bold text-xl pt-5 self-center">{{pizza.name}} {{pizza.price}} USD</h1>
                             <hr class="h-5 border-slate-300"/>
                             <p class="text-sky-800 font-bold text-lg p-5 pt-0 self-center">
                                 This pizza contains the following ingredients: 
                                 <ul class="flex flex-row gap-5 justify-center">
-                                    <p class="text-emerald-700" v-for="ingredient in pizza.ingredients" :key="ingredient">{{ingredient}} </p>
+                                    <p class="text-emerald-700" v-for="ingredient in pizza.ingredients" :key="ingredient">{{ingredient}}</p>
                                 </ul>
                             </p>
                         </div>
@@ -37,7 +37,7 @@
                     </h2>
                     <div :id="'collapse'+index" class="accordion-collapse collapse" :aria-labelledby="'heading'+index"
                     data-bs-parent="#accordionExample">
-                        <OptionsAndCartControl/>
+                        <OptionsAndCartControl :currentPizza="pizza"/>
                     </div>
                 </div>
             </div>

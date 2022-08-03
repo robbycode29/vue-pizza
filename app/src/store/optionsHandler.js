@@ -19,7 +19,7 @@ const actions = {
         commit('setIngredients', extraIngredients)
     },
     addSelected({ commit }, ingredient) {
-        commit('addSelected', ingredient)
+        commit('setSelection', ingredient)
     }
 }
 
