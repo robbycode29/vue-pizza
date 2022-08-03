@@ -40,6 +40,11 @@ export default {
         addToCart() {
             this.pizza.inCart = true;
             this.pizza.nrOfItemsInCart += 1;
+            for (let i = 0; i < this.pizza.extraIngredients.length; i++) {
+                if (this.pizza.extraIngredients[i].checked) {
+                    this.pizza.price += this.pizza.extraIngredients[i].price;
+                }
+            }
             this.addPizzaToCart(this.pizza);
         },
         removeFromCart() {
