@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col">
-        <h1 class="mt-20 font-semibold text-2xl">
+    <div class="flex flex-col bg-slate-700">
+        <h1 class="mt-20 font-semibold text-2xl text-white">
         Choose from our delicious pizzas
         </h1>
         <div class="h-20"></div>

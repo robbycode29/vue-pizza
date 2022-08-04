@@ -1,6 +1,7 @@
 import ClientPage from './components/ClientPage.vue'
 import PizzaList from './components/client_page-components/PizzaList.vue'
 import ShoppingCart from './components/client_page-components/ShoppingCart.vue'
+import ThankyouPage from './components/client_page-components/ThankyouPage.vue'
 
 const routes = [
     { 
@@ -9,6 +10,7 @@ const routes = [
         children: [
             { path: 'pizza/', component: PizzaList },
             { path: 'cart/', component: ShoppingCart },
+            { path: 'thankyou/', component: ThankyouPage}
         ]
     },
 ]
