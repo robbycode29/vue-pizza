@@ -12,15 +12,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in itemList" :key="item.id">
+                    <tr v-for="item in this.getCart" :key="item.id">
                         <td>{{ item.name }}</td>
-                        <td>{{ item.price }} USD</td>
-                        <td>
-                            <button @click="removeItem(item.id)"><img class="pb-1" width="10px" src="../../assets/minus-white.png"/></button>
+                        <td>{{ item.price + sumIngredients(item.extraIngredients) }} USD</td>
+                        <td class="py-1">
+                            <button @click="removeItem(item)" class="bg-white rounded-full py-2 px-1 -translate-y-1"><img width="10px" class="h-[3px]" src="../../assets/minus-slate.png"/></button>
                             {{ item.nrOfItemsInCart }}
-                            <button @click="addItem(item.id)"><img width="10px" src="../../assets/plus-white.png"/></button>
+                            <button @click="addItem(item)" class="bg-white rounded-full p-1"><img width="10px" src="../../assets/plus-slate.png"/></button>
                         </td>
-                        <td>{{ item.price*item.nrOfItemsInCart }} USD</td>
+                        <td>{{ (item.price + sumIngredients(item.extraIngredients))*item.nrOfItemsInCart }} USD</td>
                     </tr>
                 </tbody>
                 <tfoot class="border-2">
@@ -30,6 +30,10 @@
                     </tr>
                 </tfoot>
             </table>
+            <div class="flex-1"></div>
+            <button @click="pay" class="bg-slate-500 text-white w-20 h-10 mb-10 flex justify-center self-center rounded-lg border-2 border-white hover:bg-white hover:text-slate-500 duration-200">
+                <h2 class="font-semibold self-center">Pay</h2>
+            </button>
         </div>
     </div>
 </template>
@@ -45,36 +49,28 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['addPizzaToCart', 'removePizzaFromCart', 'updatePizzaInCart']),
+        ...mapActions(['addPizzaToCart', 'removePizzaFromCart', 'emptyCart']),
         
-        addItem(id) {
-            this.cart = this.getCart;
-            this.itemList.forEach(item => {
-                if (item.id === id) {
-                    item.nrOfItemsInCart += 1;
-                    this.addPizzaToCart(item);
-                }
-
-            });
+        addItem(pizza) {
+            this.addPizzaToCart(pizza)
         },
-        removeItem(id) {
-            this.cart = this.getCart
-            this.itemList.forEach(item => {
-                if (item.id === id) {
-                    if (item.nrOfItemsInCart > 1) {
-                        item.nrOfItemsInCart -= 1;
-                        this.updatePizzaInCart(item)
-                    } 
-                    else if ( item.nrOfItemsInCart === 1) {
-                        item.nrOfItemsInCart = 0
-                        item.inCart = false;
-                        this.removePizzaFromCart(item)
-                    }
+        removeItem(pizza) {
+            this.removePizzaFromCart(pizza)
+            if (this.getCart.length == 0)
+                this.$router.push('/pizza')
+        },
+        sumIngredients(ingredients) {
+            let sum = 0;
+            ingredients.forEach(ingredient => {
+                if (ingredient.checked) {
+                    sum += ingredient.price;
                 }
-            })
-            if (this.itemList.length === 0) {
-                this.$router.push('/pizza/');
-            }
+            });
+            return sum;
+        },
+        pay() {
+            this.emptyCart()
+            this.$router.push('/thankyou')
         }
     },
     computed: {
@@ -86,7 +82,7 @@ export default {
         total() {
             let total = 0;
             for (let item of this.itemList) {
-                total += item.price * item.nrOfItemsInCart;
+                total += (item.price + this.sumIngredients(item.extraIngredients)) * item.nrOfItemsInCart;
             }
             return total;
         }

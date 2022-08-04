@@ -10,27 +10,55 @@ const mutations = {
 
 const actions = {
     addPizzaToCart({ commit }, pizza) {
-        let newCart = [...state.cart, pizza]
-        commit('setCart', newCart)
-    },
-    updatePizzaInCart({ commit }, pizza) {
-        let index = state.cart.forEach(p => {
-            if (p.id === pizza.id) {
-                return state.cart.indexOf(p)
+        let isInArray = false;
+        let newCart = [...state.cart];
+        state.cart.forEach(p => {
+            
+            if (pizza.id == p.id) {
+                isInArray = true;
+                p.nrOfItemsInCart += 1;
             }
-            return null
-        });
-        if (index !== null) {
-            let newCart = [...state.cart]
-            newCart[index] = pizza
-            newCart.splice(index, 1)
+            
+        })
+        if (isInArray == false) {
+                
+            pizza.inCart = true;
+            pizza.nrOfItemsInCart = 1;
+            newCart.push(pizza)
             commit('setCart', newCart)
-        }   
+        }
     },
-    removePizzaFromCart({commit}, pizza) {
-        let newCart = [...state.cart]
-        newCart.splice(state.cart.indexOf(pizza), 1)
-        commit('setCart', newCart)
+    removePizzaFromCart({ commit }, pizza) {
+        let isLastOfItsKind = false;
+        let id = null;
+        let newCart = [...state.cart];
+        state.cart.forEach(p => {
+            if (p.id == pizza.id) {
+                if (p.nrOfItemsInCart > 1) {
+                    p.nrOfItemsInCart -= 1;
+                }
+                else if (p.nrOfItemsInCart == 1) {
+                    isLastOfItsKind = true;
+                }    
+                if (isLastOfItsKind) {
+                    p.nrOfItemsInCart = 0;
+                    p.inCart = false;
+                    id = state.cart.indexOf(p)
+                }
+            }
+        })
+
+        if (id !== null) {
+            newCart.splice(id, 1)
+            commit('setCart', newCart)
+        }
+    },
+    emptyCart({ commit }) {
+        state.cart.forEach(p => {
+            p.inCart = false;
+            p.nrOfItemsInCart = 0;
+        })
+        commit('setCart', [])
     }
 }
 

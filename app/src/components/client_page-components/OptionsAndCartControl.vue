@@ -38,25 +38,10 @@ export default {
     methods: {
         ...mapActions(['addPizzaToCart', 'updatePizzaInCart', 'removePizzaFromCart']),
         addToCart() {
-            this.pizza.inCart = true;
-            this.pizza.nrOfItemsInCart += 1;
-            for (let i = 0; i < this.pizza.extraIngredients.length; i++) {
-                if (this.pizza.extraIngredients[i].checked) {
-                    this.pizza.price += this.pizza.extraIngredients[i].price;
-                }
-            }
             this.addPizzaToCart(this.pizza);
         },
         removeFromCart() {
-            if(this.pizza.nrOfItemsInCart > 1) {
-                this.pizza.nrOfItemsInCart -= 1;
-                this.updatePizzaInCart(this.pizza)
-            }
-            else {
-                this.pizza.nrOfItemsInCart = 0;
-                this.pizza.inCart = false;
-                this.removePizzaFromCart(this.pizza);
-            }
+            this.removePizzaFromCart(this.pizza);
         }
     },
     computed: {
