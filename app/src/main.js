@@ -10,7 +10,6 @@ import Vuex from 'vuex'
 import routes from './routes'
 
 import pizzaListState from './store/pizzaListState'
-import optionsHandler from './store/optionsHandler'
 import cartHandler from './store/cartHandler'
 
 Vue.use(VueRouter)
@@ -24,7 +23,6 @@ const router = new VueRouter({
 const store = new Vuex.Store({
   modules: {
     pizzaListState,
-    optionsHandler,
     cartHandler,
   }
 })

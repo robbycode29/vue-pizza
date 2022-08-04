@@ -21,7 +21,7 @@
                         transition
                         focus:outline-none"
                         type="button" data-bs-toggle="collapse" :data-bs-target="'#collapse'+index" aria-expanded="false"
-                        :aria-controls="'collapse'+index">
+                        :aria-controls="'collapse'+index" id="target-item">
                         <img :src="pizza.image" class="w-40 h-40 border-1 rounded-l-2xl border-sky-800"/>
                         <div class="flex-grow flex flex-col">
                             <h1 class="text-sky-800 font-bold text-xl pt-5 self-center">{{pizza.name}} {{pizza.price}} USD</h1>
@@ -50,8 +50,17 @@ import OptionsAndCartControl from './OptionsAndCartControl.vue';
 
 export default {
     name: "PizzaListItem",
-    props: ["pizza", "index"],
-    components: { OptionsAndCartControl }
+    props: ["pizza", "index",],
+    components: { OptionsAndCartControl },
+    methods: {
+        expand() {
+            if (this.pizza.isExpanded)
+                document.getElementById("target-item").setAttribute("aria-expanded", true);
+        }
+    },
+    mounted() {
+        this.expand()
+    }
 }
 
 </script>

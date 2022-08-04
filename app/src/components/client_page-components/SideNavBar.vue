@@ -9,6 +9,10 @@
             <div class="text-slate-500 font-semibold text-xs h-4 pb-1 px-1 rounded-full bg-white">{{this.allItems}}</div>
             <h2 class="text-white font-semibold text-lg ml-7 mt-3">Cart</h2>
         </router-link>
+        <router-link to="/orders/" class="flex flex-row w-12 ml-8 gap-1">
+            <img class="w-12 h-11" src="../../assets/clock-white.png"/>
+            <h2 class="text-white font-semibold text-lg ml-7 mt-3">Orders</h2>
+        </router-link>
     </div>
 </template>
 

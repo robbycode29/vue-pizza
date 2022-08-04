@@ -13,7 +13,19 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in this.getCart" :key="item.id">
-                        <td>{{ item.name }}</td>
+                        <td>
+                            <div>{{ item.name }}</div>
+                            <ul class="flex flex-row text-xs gap-1 justify-center items-center py-2">
+                                <button @click="editIngredients(item)" class="bg-white w-6 rounded-full p-1 ">
+                                    <img width="15px" src="../../assets/pencil-slate.png"/>
+                                </button>
+                                (
+                                <li v-for="ingredient in item.extraIngredients" :key="ingredient.id">
+                                    <span v-if="ingredient.checked">{{ ingredient.name.replace('Extra', '') }}</span>
+                                </li>
+                                )
+                            </ul>
+                        </td>
                         <td>{{ item.price + sumIngredients(item.extraIngredients) }} USD</td>
                         <td class="py-1">
                             <button @click="removeItem(item)" class="bg-white rounded-full py-2 px-1 -translate-y-1"><img width="10px" class="h-[3px]" src="../../assets/minus-slate.png"/></button>
@@ -40,6 +52,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import PizzaListItem from '../client_page-components/PizzaListItem.vue'
 
 export default {
     name: 'ShoppingCart',
@@ -71,21 +84,26 @@ export default {
         pay() {
             this.emptyCart()
             this.$router.push('/thankyou')
+        },
+        editIngredients(pizza) {
+            pizza.isExpanded = true;
+            PizzaListItem.expand
+            this.$router.push('/pizza')
         }
     },
     computed: {
         ...mapGetters(['getCart']),
-        itemList() {
-            let uniqueItems = [...new Set(this.getCart)];
-            return uniqueItems;
-        },
         total() {
             let total = 0;
-            for (let item of this.itemList) {
+            for (let item of this.getCart) {
                 total += (item.price + this.sumIngredients(item.extraIngredients)) * item.nrOfItemsInCart;
             }
             return total;
-        }
+        },
+        // addedIngredients() {
+        //     let ingredients = [];
+        //     for (let item of this)
+        // }
     }
 }
 
