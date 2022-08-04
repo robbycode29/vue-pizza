@@ -1,1 +1,2 @@
-# vue-pizza
+# npm install 
+# npm run serve
