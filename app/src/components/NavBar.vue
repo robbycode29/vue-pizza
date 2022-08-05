@@ -8,7 +8,7 @@
                     Home
                 </button>
             </router-link>
-            <router-link to="/admin">
+            <router-link to="/admin/menu-list/">
                 <button class="mr-10 bg-slate-500 hover:bg-slate-400 text-white font-bold py-2 px-4 rounded-md">
                     Admin
                 </button>
