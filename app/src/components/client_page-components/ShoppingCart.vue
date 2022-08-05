@@ -16,11 +16,12 @@
                         <td>
                             <div>{{ item.name }}</div>
                             <ul class="flex flex-row text-xs gap-1 justify-center items-center py-2">
-                                <button @click="editIngredients(item)" class="bg-white w-6 rounded-full p-1 ">
+                                <button id="shoppingCart" @click="editIngredients(item)" :aria-controls="'collapse'+item.id" class="bg-white w-6 rounded-full p-1 ">
                                     <img width="15px" src="../../assets/pencil-slate.png"/>
                                 </button>
                                 (
-                                <li v-for="ingredient in item.extraIngredients" :key="ingredient.id">
+                                <span v-if="!checkForExtra(item)">No extra ingredients</span>
+                                <li v-else v-for="ingredient in item.extraIngredients" :key="ingredient.id">
                                     <span v-if="ingredient.checked">{{ ingredient.name.replace('Extra', '') }}</span>
                                 </li>
                                 )
@@ -62,7 +63,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['addPizzaToCart', 'removePizzaFromCart', 'emptyCart']),
+        ...mapActions(['addPizzaToCart', 'removePizzaFromCart', 'emptyCart', 'addOrder']),
         
         addItem(pizza) {
             this.addPizzaToCart(pizza)
@@ -82,6 +83,7 @@ export default {
             return sum;
         },
         pay() {
+            this.addOrder(this.getCart)
             this.emptyCart()
             this.$router.push('/thankyou')
         },
@@ -89,6 +91,14 @@ export default {
             pizza.isExpanded = true;
             PizzaListItem.expand
             this.$router.push('/pizza')
+        },
+        checkForExtra(pizza) {
+            let ingredientExists = false
+            pizza.extraIngredients.forEach(i => {
+                if (i.checked)
+                    ingredientExists = true;
+            })
+            return ingredientExists;
         }
     },
     computed: {

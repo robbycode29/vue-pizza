@@ -1,0 +1,3 @@
+- add extra ingredients list in parantheses on the cart page for each item 
+- add order history functionality
+- on admin side make form  submission way of adding pizzas to the menu, by adding them to the state in pizzaListState

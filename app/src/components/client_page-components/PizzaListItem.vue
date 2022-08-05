@@ -36,7 +36,7 @@
                     </button>
                     </h2>
                     <div :id="'collapse'+index" class="accordion-collapse collapse" :aria-labelledby="'heading'+index"
-                    data-bs-parent="#accordionExample">
+                    data-bs-parent="#accordionExample #shoppingCart">
                         <OptionsAndCartControl :currentPizza="pizza"/>
                     </div>
                 </div>
@@ -55,11 +55,9 @@ export default {
     methods: {
         expand() {
             if (this.pizza.isExpanded)
+                document.getElementById("target-item").setAttribute("class", "accordion-button relative flex items-center w-full py-0 pr-5 text-base text-gray-800 text-left bg-slate-300 [&:not(.collapsed)]:bg-slate-300 border-0 rounded-none transition focus:outline-none");
                 document.getElementById("target-item").setAttribute("aria-expanded", true);
         }
-    },
-    mounted() {
-        this.expand()
     }
 }
 
