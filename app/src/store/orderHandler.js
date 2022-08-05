@@ -21,12 +21,12 @@ const actions = {
             let extraPrice = 0;
             pizza.extraIngredients.forEach(extraIngredient => {
                 if (extraIngredient.checked) {
-                    extraPrice += extraIngredient.price
+                    extraPrice += extraIngredient.price*pizza.nrOfItemsInCart
                 }
             })
             extraIngredientPrice += extraPrice;
         })
-        order.price = pizzas.reduce((acc, pizza) => acc + pizza.price, 0) + extraIngredientPrice;
+        order.price = pizzas.reduce((acc, pizza) => acc + pizza.price*pizza.nrOfItemsInCart, 0) + extraIngredientPrice;
         commit('addOrder', order)
     }
 }
