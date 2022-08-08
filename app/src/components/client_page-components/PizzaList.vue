@@ -30,8 +30,8 @@ export default {
         ...mapGetters(["getPizzas"]),
     },
     mounted() {
-        this.fetchPizzas();
-        this.fetchIngredients();
+        // this.fetchPizzas();
+        // this.fetchIngredients();
     },
 }
 

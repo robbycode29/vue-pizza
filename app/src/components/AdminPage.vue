@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-row">  
-        <SideNavBarAdmin></SideNavBarAdmin>
+    <div class="flex h-full">  
+        <SideNavBarAdmin class="flex flex-col"></SideNavBarAdmin>
         <router-view class="w-screen h-screen"></router-view>
     </div>
 </template>

@@ -1,8 +1,51 @@
 <template>
     <div>
-        <div class="bg-slate-700 h-screen flex justify-center">
-            <div class="w-11/12  mt-24 bg-slate-500 rounded-t-2xl flex flex-col items-center gap-10">
-                Menu List
+        <EditForm @hidePrompt="this.hidePrompt" :pizza="this.choice" id="myEditForm" class="absolute hidden z-90 w-full h-full justify-center items-center bg-gray-900 opacity-95"/>
+        <div class="bg-slate-700 h-fit flex justify-center">
+            <div class="w-11/12 mt-24 pb-28 bg-slate-500 rounded-2xl flex flex-col items-center gap-10">
+                <h1 class="mt-12 text-white font-semibold text-2xl">Menu</h1>
+                <table class="border-2 mx-20 text-white font-semibold">
+                    <thead class="border-2">
+                        <tr>
+                            <th class="border-2">id</th>
+                            <th class="border-2">Pizza</th>
+                            <th class="border-2">Price</th>
+                            <th class="border-2">Ingredients</th>
+                            <th class="border-2">Extra Ingredients Options</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in this.getPizzas" :key="item.id">
+                            <td class="px-10 py-2 border-2">{{item.id}}</td>
+                            <td class="px-10 py-2 border-2">{{item.name}}</td>
+                            <td class="px-10 py-2 border-2">{{item.price}} USD</td>
+                            <td class="px-10 py-2 text-xs border-2">
+                                <ul>
+                                    <li v-for="ingredient in item.ingredients" :key="ingredient">{{ingredient}}</li>
+                                </ul>
+                            </td>
+                            <td class="px-20 py-2 text-xs border-2">
+                                <ul>
+                                    <li v-for="extra in item.extraIngredients" :key="extra.id">{{extra.name}}</li>
+                                </ul>
+                            </td>
+                            <td class="px-10 py-2 border-2">
+                                <div class="flex flex-col gap-5">
+                                    <button @click="showPrompt(item)" class="w-fit self-center">
+                                        <img width="20px" src="../../assets/pencil-white.png" />
+                                    </button>
+                                    <button>
+                                        <img width="20px" src="../../assets/trash-red.png" />
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <router-link to="/admin/add-form" class="bg-slate-500 text-white font-semibold w-32 py-3 flex justify-center self-center rounded-lg border-2 border-white hover:bg-white hover:text-slate-500 duration-200">
+                    Add more
+                </router-link>
             </div>
         </div>
     </div>
@@ -10,8 +53,35 @@
 
 <script>
 
+import { mapGetters } from 'vuex'
+import EditForm from './EditForm.vue'
+
 export default {
     name: 'MenuList',
+    components: {
+        EditForm
+    },
+    data() {
+        return {
+            choice: null
+        }
+    },
+    methods: {
+        hidePrompt() {
+            document.getElementById('myEditForm').classList.add("hidden");
+        },
+        showPrompt(item) {
+            document.getElementById('myEditForm').classList.remove("hidden");
+            document.getElementById('myEditForm').classList.add("flex")
+            this.choice = item
+        }
+    },
+    computed: {
+        ...mapGetters(['getPizzas']),
+    },
+    mounted() {
+        this.hidePrompt()
+    }
 }
 
 </script>
