@@ -27,13 +27,13 @@
                                 )
                             </ul>
                         </td>
-                        <td>{{ item.price + sumIngredients(item.extraIngredients) }} USD</td>
+                        <td>{{ item.price + parseFloat(sumIngredients(item.extraIngredients)) }} USD</td>
                         <td class="py-1">
                             <button @click="removeItem(item)" class="bg-white rounded-full py-2 px-1 -translate-y-1"><img width="10px" class="h-[3px]" src="../../assets/minus-slate.png"/></button>
                             {{ item.nrOfItemsInCart }}
                             <button @click="addItem(item)" class="bg-white rounded-full p-1"><img width="10px" src="../../assets/plus-slate.png"/></button>
                         </td>
-                        <td>{{ (item.price + sumIngredients(item.extraIngredients))*item.nrOfItemsInCart }} USD</td>
+                        <td>{{ (item.price + parseFloat(sumIngredients(item.extraIngredients)))*parseInt(item.nrOfItemsInCart) }} USD</td>
                     </tr>
                 </tbody>
                 <tfoot class="border-2">
@@ -77,7 +77,7 @@ export default {
             let sum = 0;
             ingredients.forEach(ingredient => {
                 if (ingredient.checked) {
-                    sum += ingredient.price;
+                    sum += parseFloat(ingredient.price);
                 }
             });
             return sum;
@@ -106,7 +106,7 @@ export default {
         total() {
             let total = 0;
             for (let item of this.getCart) {
-                total += (item.price + this.sumIngredients(item.extraIngredients)) * item.nrOfItemsInCart;
+                total += (item.price + this.sumIngredients(item.extraIngredients)) * parseInt(item.nrOfItemsInCart);
             }
             return total;
         },

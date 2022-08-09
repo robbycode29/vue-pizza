@@ -1,7 +1,7 @@
 <template>
     <div>
-        <EditForm @hidePrompt="this.hidePrompt" :pizza="this.choice" id="myEditForm" class="absolute hidden z-90 w-full h-full justify-center items-center bg-gray-900 opacity-95"/>
-        <div class="bg-slate-700 h-fit flex justify-center">
+        <EditForm v-if="this.editing" @hidePrompt="hidePrompt" :pizza="this.choice" id="myEditForm" class="absolute z-90 w-full h-full bg-gray-900 opacity-95"/>
+        <div class="bg-slate-700 h-fit flex justify-center w-full">
             <div class="w-11/12 mt-24 pb-28 bg-slate-500 rounded-2xl flex flex-col items-center gap-10">
                 <h1 class="mt-12 text-white font-semibold text-2xl">Menu</h1>
                 <table class="border-2 mx-20 text-white font-semibold">
@@ -16,7 +16,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in this.getPizzas" :key="item.id">
+                        <tr v-for="item in this.getPizzas" :key="getPizzas.indexOf(item)">
                             <td class="px-10 py-2 border-2">{{item.id}}</td>
                             <td class="px-10 py-2 border-2">{{item.name}}</td>
                             <td class="px-10 py-2 border-2">{{item.price}} USD</td>
@@ -63,16 +63,16 @@ export default {
     },
     data() {
         return {
-            choice: null
+            choice: null,
+            editing: false
         }
     },
     methods: {
         hidePrompt() {
-            document.getElementById('myEditForm').classList.add("hidden");
+            this.editing = false;
         },
         showPrompt(item) {
-            document.getElementById('myEditForm').classList.remove("hidden");
-            document.getElementById('myEditForm').classList.add("flex")
+            this.editing = true;
             this.choice = item
         }
     },

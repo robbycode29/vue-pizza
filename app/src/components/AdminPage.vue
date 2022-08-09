@@ -1,7 +1,7 @@
 <template>
     <div class="flex h-full">  
         <SideNavBarAdmin class="flex flex-col"></SideNavBarAdmin>
-        <router-view class="w-screen h-screen"></router-view>
+        <router-view class="w-screen h-full"></router-view>
     </div>
 </template>
 

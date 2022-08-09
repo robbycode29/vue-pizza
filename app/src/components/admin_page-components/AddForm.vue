@@ -22,7 +22,7 @@
                             </div>
                             <div class="flex flex-col gap-5 items-center">
                                 <label class="text-white font-semibold text-md">Ingredients (separate with a comma)</label>
-                                <input id="ingredients" v-model="ingredients" type="text" name="ingredients" class="w-6/12 border-2 border-white rounded-lg" />
+                                <input id="ingredients" v-model.trim="ingredients" type="text" name="ingredients" class="w-6/12 border-2 border-white rounded-lg" />
                             </div>
                             <div class="flex flex-col gap-5 items-center">
                                 <label class="text-white font-semibold text-md">Extra Ingredients Options</label>
@@ -62,11 +62,8 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['addPizza', 'fetchPizzas']),
+        ...mapActions(['addPizza',]),
         checkForm: function (e) {
-            if (this.name && this.age) {
-                return true;
-            }
 
             this.errors = [];
 
@@ -84,30 +81,30 @@ export default {
             }
 
             e.preventDefault();
+
+            if (this.name && this.price && this.ingredients && this.extra)
+                return true;
+            else return false;
         },
         addToMenu(e) {
-            this.checkForm(e);
-            if (this.errors.length) {
-                return;
+            if (this.checkForm(e)) {
+
+                this.addPizza({
+                    name: this.name,
+                    price: this.price,
+                    ingredients: this.ingredients.split(','),
+                    extra: this.extra,
+                });
+                this.name = null;
+                this.price = null;
+                this.ingredients = null;
+                this.extra = null;
             }
-            this.addPizza({
-                name: this.name,
-                price: this.price,
-                ingredients: this.ingredients.split(', '),
-                extra: this.extra,
-            });
-            this.name = null;
-            this.price = null;
-            this.ingredients = null;
-            this.extra = null;
         }
     },
     computed: {
         ...mapGetters(['getPizzas'])
     },
-    mounted() {
-        this.fetchPizzas();
-    }
 }
 
 </script>

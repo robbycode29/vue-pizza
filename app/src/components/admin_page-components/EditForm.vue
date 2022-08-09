@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="h-fit w-1/2 pb-20 flex justify-center">
+        <div class="h-full w-1/2 pb-20 flex translate-x-1/2">
             <div class="w-full h-fit mt-24 bg-slate-500 rounded-2xl flex flex-col gap-10">
                 <h1 class="mt-12 text-white font-semibold text-2xl">Edit menu</h1>
                 <div class="border-2 borer-white rounded-2xl m-10 mt-0 flex flex-col items-center">
-                    <form id="addForm" action="" class="mt-10 w-full">
+                    <form id="editForm" @submit="editMenu" class="mt-10 w-full">
                         <p v-if="errors.length" class="text-red-500">
                             <b>Please correct the following error(s):</b>
                             <ul>
@@ -22,7 +22,7 @@
                             </div>
                             <div class="flex flex-col gap-5 items-center">
                                 <label class="text-white font-semibold text-md">Ingredients (separate with a comma)</label>
-                                <input id="ingredients" v-model="ingredients" type="text" name="ingredients" class="w-6/12 border-2 border-white rounded-lg" />
+                                <input id="ingredients" v-model.trim="ingredients" type="text" name="ingredients" class="w-6/12 border-2 border-white rounded-lg" />
                             </div>
                             <div class="flex flex-col gap-5 items-center">
                                 <label class="text-white font-semibold text-md">Extra Ingredients Options</label>
@@ -48,6 +48,8 @@
 
 <script>
 
+import { mapActions } from 'vuex';
+
 import extraIngredients from '../../store/extraIngredients'
 
 export default {
@@ -55,17 +57,55 @@ export default {
     data() {
         return {
             errors: [],
-            name: null,
-            price: null,
-            ingredients: null,
-            extra: [],
+            name: this.pizza.name,
+            price: this.pizza.price,
+            ingredients: this.pizza.ingredients,
+            extra: this.pizza.extraIngredients,
             extraIngredients: extraIngredients
         }
     },
     props: ['pizza'],
     methods: {
-        editMenu() {
+        ...mapActions(['editPizza']),
+        checkForm: function (e) {
 
+            this.errors = [];
+
+            if (!this.name) {
+                this.errors.push('Name required.');
+            }
+            if (!this.price) {
+                this.errors.push('Price required.');
+            }
+            if (!this.ingredients) {
+                this.errors.push('Ingredients required.');
+            }
+            if (!this.extra) {
+                this.errors.push('Extra ingredients required.');
+            }
+
+            e.preventDefault();
+
+            if (this.name && this.price && this.ingredients && this.extra)
+                return true;
+            else return false;
+
+            
+        },
+        editMenu(e) {
+            if (this.checkForm(e))
+                this.editPizza({
+                    id: this.pizza.id,
+                    name: this.name,
+                    price: this.price,
+                    image: this.pizza.image,
+                    ingredients: String(this.ingredients).split(','),
+                    extra: this.extra,
+                    isExpanded: this.pizza.isExpanded,
+                    inCart: this.pizza.inCart,
+                    nrOfItemsInCart: this.pizza.nrOfItemsInCart,
+                    extraPrice: this.pizza.extraPrice,
+                });
         },
         hidePrompt() {
             this.$emit('hidePrompt')
