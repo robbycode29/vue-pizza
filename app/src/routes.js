@@ -1,6 +1,8 @@
 import ClientPage from './components/ClientPage.vue'
 import AdminPage from './components/AdminPage.vue'
 
+import WelcomePage from './components/WelcomePage.vue'
+
 import PizzaList from './components/client_page-components/PizzaList.vue'
 import ShoppingCart from './components/client_page-components/ShoppingCart.vue'
 import ThankyouPage from './components/client_page-components/ThankyouPage.vue'
@@ -14,6 +16,7 @@ const routes = [
         path:'/', 
         component: ClientPage, 
         children: [
+            { path: '/', component: WelcomePage },
             { path: 'pizza/', component: PizzaList },
             { path: 'cart/', component: ShoppingCart },
             { path: 'thankyou/', component: ThankyouPage},

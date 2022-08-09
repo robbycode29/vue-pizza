@@ -53,7 +53,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import PizzaListItem from '../client_page-components/PizzaListItem.vue'
+// import PizzaListItem from '../client_page-components/PizzaListItem.vue'
 
 export default {
     name: 'ShoppingCart',
@@ -89,7 +89,7 @@ export default {
         },
         editIngredients(pizza) {
             pizza.isExpanded = true;
-            PizzaListItem.expand
+            // PizzaListItem.expand
             this.$router.push('/pizza')
         },
         checkForExtra(pizza) {

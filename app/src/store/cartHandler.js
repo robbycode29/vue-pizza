@@ -42,6 +42,7 @@ const actions = {
                 }    
                 if (isLastOfItsKind) {
                     p.nrOfItemsInCart = 0;
+                    p.isExpanded = false;
                     p.inCart = false;
                     id = state.cart.indexOf(p)
                 }
