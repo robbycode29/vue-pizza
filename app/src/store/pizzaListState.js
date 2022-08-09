@@ -53,9 +53,10 @@ const actions = {
 
         commit('setPizzas', newArray)
     },
-    // deletePizza({ commit }) {
-
-    // }
+    deletePizza({ commit }, pizza) {
+        let newArray = state.pizzas.filter(p => p.id !== pizza.id)
+        commit('setPizzas', newArray)
+    }
 }
 
 const getters = {

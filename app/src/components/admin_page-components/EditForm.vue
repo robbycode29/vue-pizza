@@ -93,7 +93,7 @@ export default {
             
         },
         editMenu(e) {
-            if (this.checkForm(e))
+            if (this.checkForm(e)) {
                 this.editPizza({
                     id: this.pizza.id,
                     name: this.name,
@@ -106,6 +106,8 @@ export default {
                     nrOfItemsInCart: this.pizza.nrOfItemsInCart,
                     extraPrice: this.pizza.extraPrice,
                 });
+                this.hidePrompt()
+            }  
         },
         hidePrompt() {
             this.$emit('hidePrompt')
