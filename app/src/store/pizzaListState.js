@@ -56,7 +56,16 @@ const actions = {
     deletePizza({ commit }, pizza) {
         let newArray = state.pizzas.filter(p => p.id !== pizza.id)
         commit('setPizzas', newArray)
-    }
+    },
+    // closeOptionsAndCartControl({ commit }, pizza) {
+    //     let newPizza = state.pizzas.filter(p => p.id == pizza.id)
+    //     let newArray = state.pizzas.filter(p => p.id !== pizza.id)
+
+    //     newPizza.isExpanded = false;
+
+    //     console.log(newPizza)
+    //     commit('setPizzas', newArray.push(newPizza))
+    // }
 }
 
 const getters = {

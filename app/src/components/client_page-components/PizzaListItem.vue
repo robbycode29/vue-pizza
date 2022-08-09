@@ -48,17 +48,24 @@
 <script>
 import OptionsAndCartControl from './OptionsAndCartControl.vue';
 
+import { mapActions } from 'vuex';
+
 export default {
     name: "PizzaListItem",
     props: ["pizza", "index",],
     components: { OptionsAndCartControl },
     methods: {
+        ...mapActions(['closeOptionsAndCartControl']),
         expand() {
-            if (this.pizza.isExpanded)
-                document.getElementById("target-item").setAttribute("class", "accordion-button relative flex items-center w-full py-0 pr-5 text-base text-gray-800 text-left bg-slate-300 [&:not(.collapsed)]:bg-slate-300 border-0 rounded-none transition focus:outline-none");
-                document.getElementById("target-item").setAttribute("aria-expanded", true);
+            if (this.pizza.isExpanded) {
+                document.getElementById("collapse"+this.index).setAttribute("class", "");
+                document.getElementById("collapse"+this.index).setAttribute("aria-expanded", true);
+            }
         }
-    }
+    },
+    mounted() {
+        this.expand()
+    },
 }
 
 </script>
