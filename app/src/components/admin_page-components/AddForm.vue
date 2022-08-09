@@ -37,6 +37,7 @@
                             </button>
                         </div>
                     </form>
+                    <span v-if="added" class="text-green-500 font-semibold text-md">Item added</span>
                 </div>
             </div>
         </div>
@@ -54,6 +55,8 @@ export default {
     data() {
         return {
             errors: [],
+            added: false,
+
             name: null,
             price: null,
             ingredients: null,
@@ -99,12 +102,16 @@ export default {
                 this.price = null;
                 this.ingredients = null;
                 this.extra = null;
+                this.added = true;
             }
-        }
+        },
     },
     computed: {
         ...mapGetters(['getPizzas'])
     },
+    mounted() {
+        this.added = false;
+    }
 }
 
 </script>
